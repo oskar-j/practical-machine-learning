@@ -334,7 +334,7 @@ barplot
 <pre><code>## Error: Aesthetics must either be length one, or the same length as the dataProblems:variable.group
 </code></pre>
 
-<h3>Check models on PCA-selected features only</h3>
+<h3><u>Part A:</u> Check models on PCA-selected features only</h3>
 
 <h4>Naive Bayes</h4>
 
@@ -694,7 +694,7 @@ confusionMatrix(testing$classe, predict(modelFit,testing))
 # answers produced from Stochastic Gradient Boosting with PCA
 </code></pre>
 
-<h4>Check models on sensory-data only</h4>
+<h3><u>Part B:</u> Check models on sensory-data only</h3>
 
 <h5>I&#39;ll take raw sensor data, which are, according to paper</h5>
 
@@ -1083,7 +1083,7 @@ modelFit &lt;- train(classe ~ ., method=&quot;gbm&quot;,
 # answers produced from Stochastic Gradient Boosting with sensor-only data
 </code></pre>
 
-<h3>Check models on all 55 features</h3>
+<h3><u>Part C:</u> Check models on all 55 features</h3>
 
 <h4>Naive Bayes</h4>
 
@@ -1313,7 +1313,7 @@ consensus &lt;- colnames(a)[apply(a,1,which.max)]
 pml_write_files(consensus)
 </code></pre>
 
-<h4>Summary</h4>
+<h3><u>Summary</u></h3>
 
 <h4>Machine Learnings algorithms which showed to be most effective where: random forests, knn (k-nearest neighbors), and stochastic gradient boosting. In those all 3 I always used k-cross validation [with k=5] (or analyzing OOB for RandomForests)* to verify if accuracy is legit. Naive Bayes had accuracy of only 0.65-0.7. Finally, I used Majority Voting method to choose a final classification from candidates (hence the &#39;consensus&#39; variable).</h4>
 
