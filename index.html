@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Loading neccesary libraries</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h3>Loading neccesary libraries</h3>
+
+<pre><code class="r">library(doParallel)
+library(knitr)
+library(caret)
+library(randomForest)
+library(ggplot2)
+library(reshape2)
+</code></pre>
+
+<h3>Setting up working directory and register parallel</h3>
+
+<pre><code class="r">setwd(&quot;/mnt/data1/oskar/pml/&quot;)
+registerDoParallel(detectCores())
+# knitr sometimes refuses to co-work with Parallel package
+# but works with instruction knit2html()
+</code></pre>
+
+<h3>Reading data</h3>
+
+<pre><code class="r">ultima &lt;- read.csv(&quot;/mnt/data1/oskar/pml/pml-testing.csv&quot;,
+                   header = T,
+                   na.strings = &quot;NA&quot;, row.names = 1)
+dataset &lt;- read.csv(&quot;/mnt/data1/oskar/pml/pml-training.csv&quot;,
+                   header = T,
+                   na.strings = c(&quot;NA&quot;,&quot;#DIV/0!&quot;),
+                   row.names = 1)
+</code></pre>
+
+<h3>Cleaning data</h3>
+
+<pre><code class="r"># data is dirty, cleaning it here and fixing col types
+dataset$kurtosis_roll_belt = as.numeric(dataset$kurtosis_roll_belt)
+dataset$kurtosis_picth_dumbbell = as.numeric(dataset$kurtosis_picth_dumbbell)
+dataset$skewness_roll_dumbbell = as.numeric(dataset$skewness_roll_dumbbell)
+dataset$skewness_pitch_dumbbell = as.numeric(dataset$skewness_pitch_dumbbell)
+dataset$max_yaw_dumbbell = as.numeric(dataset$max_yaw_dumbbell)
+dataset$min_yaw_dumbbell = as.numeric(dataset$min_yaw_dumbbell)
+# remove unwanted columns, too obvious or useless
+p1 &lt;- qplot(dataset$user_name, geom=&quot;histogram&quot;,
+            fill=I(&quot;blue&quot;), col=I(&quot;red&quot;))
+p2 &lt;- qplot(dataset$cvtd_timestamp, geom=&quot;histogram&quot;,
+            fill=I(&quot;grey&quot;), col=I(&quot;red&quot;))
+p3 &lt;- qplot(dataset$new_window, geom=&quot;histogram&quot;)
+p4 &lt;- qplot(dataset$total_accel_belt, geom=&quot;histogram&quot;,
+            fill=I(&quot;blue&quot;), col=I(&quot;red&quot;))
+multiplot(p1, p2, p3, p4, cols=2)
+</code></pre>
+
+<pre><code>## stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="data:image/png;base64,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BoTD4d/97ndWpzBmx44d5fWcuY6OjuRTlMtCd3d3Z2en1Skwkw0MDPBbhbPH3r179edDwUQW3MWcD7/f7/f7S7Ch119/PRaLXXjhhSXYlim6uroOHTp06aWXWh0kX2NjY3/84x/L68bMX/ziF+ecc059fb3VQfK1a9euM844o4weB33kyJHBwcFly5ZZHaQslax7LGsHDhw4ePDgZZddZnUQlMLOnTvPPvvsMuoDy8JsP4MIAACASSgQAQAAkMamXzGXTE1NTTwetzqFAV6vt7zOoiuKsmDBAqtTGNPc3Ox0Oq1OYUB9fX15fedYVVUly3w6RRGVXVeJd6Ps+sCyIGmaZnUGAAAA2Agf4gEAAJCGAhEAAABpZleBGIlEfvazn016sbOz8w9/+IMVcQzTo77yyit79uwZGxvr6uqyOtGf7N+/f9euXdPOVkZNrTey1SnybdjylfEtCQCw3Gy/SaUcnXvuuUKI48ePd3V1tba2Wh1nZtIb2XKLFy+2OgIAYDaamQViOBz+5S9/qd+efMUVVwQCgV/96leSJFVWVgohYrHY1q1bh4aGFEW55ppr9EX279/f2dkZj8dHRkZaW1v7+voikchNN92kadqWLVvC4bCmaR/84Afnzp1bjMChUGjr1q0TExOyLF977bUOhyM1/9DQ0OHDh998883ly5cLIV555ZVgMHjixInu7u5Dhw41NTWlJkwkEs8880w8Hvf5fNdcc42iKCUILITo6el54oknhoeHV69e3djYmCP/pPaPRqMlCJw0aes9PT2RSGTZsmUnTpz4wx/+cMYZZ+hRly1bpmna+eefP+nvUoKDIdX+/fsHBweXL1+emrmvr08P+fGPf/zpp59Ovn78+PGMx/Cvf/3r5cuXn3baabt27fJ6vaV5LPzOnTuHhobGx8eDweDatWvnzZuXugtOpzP1LdnZ2anv0S233PLUU0+VsoUxk+zfv//AgQOJRGJoaOiSSy45/fTTS/yGRQk8/vjjqR3aueeea+E/lJlN+frXv251BvMNDw9XV1dfccUVQoienp4jR440NzevW7cuFAodP348kUgkEomNGzfOnTv36aefbmxsDIfDbre7v79/06ZNwWBwYmLiuuuue+uttxRF6erq8nq969evDwQCzz777DnnnFOMwLt27ZozZ87VV1+tqqpejqTmr6ioOHz48F/+5V8O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/d+JRKK/vz8cDv/sZz+7/vrr9QUnJia8Xm8sFkuuRNO0EydOfPnLX/Z6vYFA4P7779eyF4j5rPnVV1/VP7Bm29PXXnutsrJS3/Srr77a2tqabU9fe+210047TV/q7/7u7z71qU/pwy0tLQcOHMi2XwDKlK26wYw9Vcb16M+RTiQSzc3Nt99++3e/+90XX3zxPe95T7bdzDF/aoE4desZ2+fuu+9ua2vTXzxx4oTD4SggEiw3Mx+UDVMcP348+aCphQsX6gOqqt5///2//e1vA4GAy+Xy+/2pi2Scet111506derWW299++23b7/99r/92789evTo008/nXyKqdPpPHHiRGNjY3I9c+fOvfPOO48ePfqJT3ziiiuu2LhxY+pWtHduvc9zzUKI+fPnu1yuHDvb0NCg/0hx8qeKs+1p8nsf/YH+yWEhxLT7BaC82K0bnNpTZVzPqlWr9u3bd/Dgwblz565du/ZnP/uZ0+nM8eDAPOefuvWM7XP8+PFknrlz5zqdzv7+fqORYDkKRGQ1b968Q4cO6cNHjhzRBx577LHf/OY3//mf/1lTU/Pwww9v27YtdZGMUw8fPrx69epPfvKTPT09H/7wh6uqqhobGz/wgQ88/vjjQoh4PN7R0ZGstIQQX/ziF5uamm688UYhxKWXXnrWWWe99dZbQojk7YG9vb36QJ5rPnnyZLI7y0aSpEmv5N7TjHLvF4CyY7ducGpPlXE9kiSdf/7599577/Lly1euXPmpT33K4XDcdNNN2XbT5/PlM//UrWdsn4aGhpdfflkf1k+X1tbWqqpqKBIsx00qyGrjxo0/+tGPnnvuub6+vq9+9at613Dy5MmKigqPx3PixInvf//7ExMTyfnHxsYyTt26desNN9zw9ttvx+PxcDjs8Xiuuuqq5557rr29fWBg4O///u8/97nPJfudsbGx9773vf/xH/8xNjamadrvf//74eHhM888MxAIvPzyy/v27Tt58uQPfvADfWZDazYqx55mY+LWAdiBrbrBjAmzrWf16tU/+clPli9fXltbW11d/dRTT1122WU59tTo/Dna50Mf+tATTzyxffv2oaGhL3zhC9dee63+Eb2wTcAyFn/FDXv7/ve/39TUdNppp/30pz/Vr70bHh7+wAc+UFNTs3Llyl//+tf19fU///nPNU37yEc+ov889NSpo6OjGzZs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" alt="plot of chunk clean_data"/> </p>
+
+<h3>Removing unwanted columns, which are too obvious and may cause overfitting</h3>
+
+<pre><code class="r">dataset &lt;- dataset[,-which(names(dataset) %in% c(
+   &quot;user_name&quot;,&quot;cvtd_timestamp&quot;, &quot;new_window&quot;, &quot;num_window&quot;))]
+</code></pre>
+
+<h3>Partitioning data for train and test cases, p=0.75 by rule of thumb</h3>
+
+<pre><code class="r">testIndex = createDataPartition(dataset$classe, p = 3/4)[[1]]
+testing = dataset[-testIndex,]
+training = dataset[testIndex,]
+</code></pre>
+
+<h3>Data cleaning part 2</h3>
+
+<pre><code class="r"># remove columns which have only NA in all rows
+testing &lt;- testing[,colSums(is.na(testing))&lt;nrow(testing)]
+training &lt;- training[,colSums(is.na(training))&lt;nrow(training)]
+# remove zero variance columns
+zero_v_train &lt;-
+   names(training[, sapply(
+      training, function(v) var(v, na.rm=TRUE)==0)])
+training &lt;- training[,-which(names(training) %in% zero_v_train)]
+testing &lt;- testing[,-which(names(testing) %in% zero_v_train)]
+</code></pre>
+
+<h3>Principal component analysis</h3>
+
+<pre><code class="r">cls_indx = which(names(training) %in% c(&quot;classe&quot;))
+set.seed(31337)
+preProc &lt;- preProcess(training[,-cls_indx], method=&quot;pca&quot;, thresh=0.85)
+preProc
+</code></pre>
+
+<pre><code>## 
+## Call:
+## preProcess.default(x = training[, -cls_indx], method = &quot;pca&quot;, thresh
+##  = 0.85)
+## 
+## Created from 161 samples and 145 variables
+## Pre-processing: principal component signal extraction, scaled, centered 
+## 
+## PCA needed 27 components to capture 85 percent of the variance
+</code></pre>
+
+<pre><code class="r"># delete columns with at least 1 or more NA value
+training &lt;- training[, colSums(is.na(training)) == 0]
+testing &lt;- testing[, colSums(is.na(testing)) == 0]
+# check again PCA with threshold 0.85
+cls_indx = which(names(training) %in% c(&quot;classe&quot;))
+set.seed(31337)
+preProc &lt;- preProcess(training[,-cls_indx], method=&quot;pca&quot;, thresh=0.85)
+preProc
+</code></pre>
+
+<pre><code>## 
+## Call:
+## preProcess.default(x = training[, -cls_indx], method = &quot;pca&quot;, thresh
+##  = 0.85)
+## 
+## Created from 14718 samples and 54 variables
+## Pre-processing: principal component signal extraction, scaled, centered 
+## 
+## PCA needed 17 components to capture 85 percent of the variance
+</code></pre>
+
+<h3>Check different models below</h3>
+
+<pre><code class="r">variable.group = colnames(training)
+melted &lt;- melt(preProc$rotation[,1:9]) # cbind(variable.group, 
+barplot &lt;- ggplot(data=melted) +
+  geom_bar(aes(x=Var1, y=value, fill=variable.group), stat=&quot;identity&quot;) +
+  facet_wrap(~Var2)
+barplot
+</code></pre>
+
+<pre><code>## Error: Aesthetics must either be length one, or the same length as the dataProblems:variable.group
+</code></pre>
+
+<h3>Check models on PCA-selected features only</h3>
+
+<h4>Naive Bayes</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;nb&quot;, data=training,
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess = &quot;pca&quot;)
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   A   B   C   D   E
+##          A 860  82 256 163  34
+##          B  76 579 140  67  87
+##          C 182  83 523  34  33
+##          D  62  67 132 480  63
+##          E  61 144  74  73 549
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.6099          
+##                  95% CI : (0.5961, 0.6236)
+##     No Information Rate : 0.2531          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.5089          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.6930   0.6063   0.4649  0.58752   0.7167
+## Specificity            0.8539   0.9063   0.9121  0.92072   0.9149
+## Pos Pred Value         0.6165   0.6101   0.6117  0.59701   0.6093
+## Neg Pred Value         0.8914   0.9049   0.8513  0.91780   0.9458
+## Prevalence             0.2531   0.1947   0.2294  0.16660   0.1562
+## Detection Rate         0.1754   0.1181   0.1066  0.09788   0.1119
+## Detection Prevalence   0.2845   0.1935   0.1743  0.16395   0.1837
+## Balanced Accuracy      0.7735   0.7563   0.6885  0.75412   0.8158
+</code></pre>
+
+<h4>Generalized Linear Model</h4>
+
+<h5>Because &#39;classe&#39; is a field suggesting a multi-label classification problem, we shouldn&#39;t really use glm which works best on binary classes {0,1}</h5>
+
+<pre><code class="r"># set.seed(31337)
+# modelFit &lt;- train(classe ~ ., method=&quot;glm&quot;, data=training,
+#                   trControl = trainControl(
+#                      preProcOptions = list(thresh = 0.85)
+#                   ),
+#                   preProcess = &quot;pca&quot;)
+# confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<h4>Linear Discriminant Analysis</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;lda&quot;,
+                  preProcess=&quot;pca&quot;,
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  data=training)
+# took around 2 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   A   B   C   D   E
+##          A 946 101 127 181  40
+##          B 191 417 119 130  92
+##          C 352 100 299  53  51
+##          D  94 171  82 375  82
+##          E 147 147  91  98 418
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.5006          
+##                  95% CI : (0.4865, 0.5147)
+##     No Information Rate : 0.3528          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.3627          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.5468  0.44551  0.41643  0.44803  0.61201
+## Specificity            0.8585  0.86593  0.86718  0.89452  0.88557
+## Pos Pred Value         0.6781  0.43941  0.34971  0.46642  0.46393
+## Neg Pred Value         0.7766  0.86877  0.89652  0.88732  0.93380
+## Prevalence             0.3528  0.19086  0.14641  0.17068  0.13927
+## Detection Rate         0.1929  0.08503  0.06097  0.07647  0.08524
+## Detection Prevalence   0.2845  0.19352  0.17435  0.16395  0.18373
+## Balanced Accuracy      0.7027  0.65572  0.64181  0.67127  0.74879
+</code></pre>
+
+<h4>k-Nearest Neighbors</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;knn&quot;, 
+                  trControl = trainControl(
+                    method=&quot;cv&quot;, number = 5,
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess=&quot;pca&quot;,
+                  data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1354   12   15   11    3
+##          B   22  900   24    3    0
+##          C   10   16  807   17    5
+##          D    8    4   40  748    4
+##          E    5    8    9    6  873
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.9547          
+##                  95% CI : (0.9485, 0.9604)
+##     No Information Rate : 0.2853          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.9427          
+##  Mcnemar&#39;s Test P-Value : 0.004504        
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9678   0.9574   0.9017   0.9529   0.9864
+## Specificity            0.9883   0.9876   0.9880   0.9864   0.9930
+## Pos Pred Value         0.9706   0.9484   0.9439   0.9303   0.9689
+## Neg Pred Value         0.9872   0.9899   0.9783   0.9910   0.9970
+## Prevalence             0.2853   0.1917   0.1825   0.1601   0.1805
+## Detection Rate         0.2761   0.1835   0.1646   0.1525   0.1780
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.9781   0.9725   0.9449   0.9696   0.9897
+</code></pre>
+
+<h5>From now on, all models with high accuracy will get k-fold cross validated</h5>
+
+<h5>Hence the trainControl with method=&ldquo;cv&rdquo; instructions in algorithms producing &gt; 0.75 accuracy</h5>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers1 &lt;- predict(modelFit, ultima)
+# answers produced from k-nn model with PCA
+</code></pre>
+
+<h4>Random Forests</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;rf&quot;, 
+                  trControl = trainControl(
+                    method = &quot;oob&quot;,
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess=&quot;pca&quot;,
+                  data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1376    4    5    8    2
+##          B   14  926    8    0    1
+##          C    4   15  832    2    2
+##          D    7    7   35  752    3
+##          E    0   11    5    4  881
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.9721          
+##                  95% CI : (0.9671, 0.9765)
+##     No Information Rate : 0.2857          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.9647          
+##  Mcnemar&#39;s Test P-Value : 2.002e-08       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9822   0.9616   0.9401   0.9817   0.9910
+## Specificity            0.9946   0.9942   0.9943   0.9874   0.9950
+## Pos Pred Value         0.9864   0.9758   0.9731   0.9353   0.9778
+## Neg Pred Value         0.9929   0.9906   0.9869   0.9966   0.9980
+## Prevalence             0.2857   0.1964   0.1805   0.1562   0.1813
+## Detection Rate         0.2806   0.1888   0.1697   0.1533   0.1796
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.9884   0.9779   0.9672   0.9846   0.9930
+</code></pre>
+
+<pre><code class="r">summary(modelFit$err.rate)
+</code></pre>
+
+<pre><code>## Length  Class   Mode 
+##      0   NULL   NULL
+</code></pre>
+
+<h5>Random forest is an exception described in literature, and for validation it uses &#39;oob&#39; (&ldquo;out of bounds&rdquo;) method</h5>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers2 &lt;- predict(modelFit, ultima)
+# answers produced from Random Forest with PCA
+</code></pre>
+
+<h4>Multinomial</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;multinom&quot;,
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess=&quot;pca&quot;, data=training)
+</code></pre>
+
+<pre><code>## # weights:  95 (72 variable)
+## initial  value 23687.707195 
+## iter  10 value 21574.031616
+## iter  20 value 21477.168569
+## iter  30 value 20151.034153
+## iter  40 value 19703.260371
+## iter  50 value 19083.679481
+## iter  60 value 19019.347996
+## iter  70 value 18979.468143
+## iter  80 value 18962.890994
+## final  value 18962.837988 
+## converged
+</code></pre>
+
+<pre><code class="r"># and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   A   B   C   D   E
+##          A 964  69 125 183  54
+##          B 188 387 117 151 106
+##          C 344  82 325  54  50
+##          D 102 140  77 392  93
+##          E 137 136 118 103 407
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.5047          
+##                  95% CI : (0.4906, 0.5188)
+##     No Information Rate : 0.3538          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.3682          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.5556  0.47543  0.42651  0.44394  0.57324
+## Specificity            0.8640  0.86259  0.87204  0.89754  0.88221
+## Pos Pred Value         0.6910  0.40780  0.38012  0.48756  0.45172
+## Neg Pred Value         0.7803  0.89204  0.89207  0.88024  0.92431
+## Prevalence             0.3538  0.16599  0.15538  0.18006  0.14478
+## Detection Rate         0.1966  0.07892  0.06627  0.07993  0.08299
+## Detection Prevalence   0.2845  0.19352  0.17435  0.16395  0.18373
+## Balanced Accuracy      0.7098  0.66901  0.64928  0.67074  0.72773
+</code></pre>
+
+<h4>Stochastic Gradient Boosting</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;gbm&quot;,
+                  trControl = trainControl(
+                    method=&quot;cv&quot;, number = 5,
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess=&quot;pca&quot;, data=training)
+</code></pre>
+
+<pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+##      1        1.6094            -nan     0.1000    0.1040
+##      2        1.5419            -nan     0.1000    0.0779
+##      3        1.4921            -nan     0.1000    0.0605
+##      4        1.4526            -nan     0.1000    0.0601
+##      5        1.4147            -nan     0.1000    0.0488
+##      6        1.3824            -nan     0.1000    0.0448
+##      7        1.3533            -nan     0.1000    0.0447
+##      8        1.3251            -nan     0.1000    0.0384
+##      9        1.3008            -nan     0.1000    0.0331
+##     10        1.2798            -nan     0.1000    0.0281
+##     20        1.1354            -nan     0.1000    0.0148
+##     40        0.9890            -nan     0.1000    0.0102
+##     60        0.8898            -nan     0.1000    0.0084
+##     80        0.8179            -nan     0.1000    0.0062
+##    100        0.7566            -nan     0.1000    0.0019
+##    120        0.7095            -nan     0.1000    0.0017
+##    140        0.6653            -nan     0.1000    0.0033
+##    150        0.6468            -nan     0.1000    0.0020
+</code></pre>
+
+<pre><code class="r"># and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1176   41   75   95    8
+##          B   86  717   79   32   35
+##          C   90   72  642   32   19
+##          D   51   29   88  605   31
+##          E   60   75   49   33  684
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.7798          
+##                  95% CI : (0.7679, 0.7913)
+##     No Information Rate : 0.2983          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.721           
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.8038   0.7677   0.6881   0.7591   0.8803
+## Specificity            0.9364   0.9416   0.9464   0.9515   0.9474
+## Pos Pred Value         0.8430   0.7555   0.7509   0.7525   0.7592
+## Neg Pred Value         0.9182   0.9451   0.9281   0.9532   0.9768
+## Prevalence             0.2983   0.1905   0.1903   0.1625   0.1584
+## Detection Rate         0.2398   0.1462   0.1309   0.1234   0.1395
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.8701   0.8546   0.8172   0.8553   0.9139
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers3 &lt;- predict(modelFit, ultima)
+# answers produced from Stochastic Gradient Boosting with PCA
+</code></pre>
+
+<h4>Check models on sensory-data only</h4>
+
+<h5>I&#39;ll take raw sensor data, which are, according to paper</h5>
+
+<pre><code class="r">colNamesRD &lt;- c(&quot;accel_dumbbell_x&quot;, &quot;accel_dumbbell_y&quot;, &quot;accel_dumbbell_z&quot;,
+                &quot;magnet_dumbbell_x&quot;, &quot;magnet_dumbbell_y&quot;, &quot;magnet_dumbbell_z&quot;,
+                &quot;magnet_arm_x&quot;, &quot;magnet_arm_y&quot;, &quot;magnet_arm_z&quot;,
+                &quot;accel_arm_x&quot;, &quot;accel_arm_y&quot;, &quot;accel_arm_z&quot;,
+                &quot;magnet_belt_x&quot;, &quot;magnet_belt_y&quot;, &quot;magnet_belt_z&quot;,
+                &quot;accel_belt_x&quot;, &quot;accel_belt_y&quot;, &quot;accel_belt_z&quot;,
+                &quot;classe&quot;)
+</code></pre>
+
+<h4>Naive Bayes</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;nb&quot;,
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1029   20  145  178   23
+##          B  121  528  146  126   28
+##          C   93   62  611   81    8
+##          D   84   20  115  536   49
+##          E   43  116   74  105  563
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.6662          
+##                  95% CI : (0.6528, 0.6794)
+##     No Information Rate : 0.2794          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.579           
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.7511   0.7078   0.5600   0.5224   0.8390
+## Specificity            0.8964   0.8987   0.9360   0.9309   0.9202
+## Pos Pred Value         0.7376   0.5564   0.7146   0.6667   0.6249
+## Neg Pred Value         0.9028   0.9449   0.8815   0.8805   0.9730
+## Prevalence             0.2794   0.1521   0.2225   0.2092   0.1368
+## Detection Rate         0.2098   0.1077   0.1246   0.1093   0.1148
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.8238   0.8033   0.7480   0.7267   0.8796
+</code></pre>
+
+<h4>GLM (Generalized Linear Model)</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;glm&quot;,
+                  data=training[,colNamesRD])
+</code></pre>
+
+<pre><code>## Error in train.default(x, y, weights = w, ...): final tuning parameters could not be determined
+</code></pre>
+
+<pre><code class="r">confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1029   20  145  178   23
+##          B  121  528  146  126   28
+##          C   93   62  611   81    8
+##          D   84   20  115  536   49
+##          E   43  116   74  105  563
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.6662          
+##                  95% CI : (0.6528, 0.6794)
+##     No Information Rate : 0.2794          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.579           
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.7511   0.7078   0.5600   0.5224   0.8390
+## Specificity            0.8964   0.8987   0.9360   0.9309   0.9202
+## Pos Pred Value         0.7376   0.5564   0.7146   0.6667   0.6249
+## Neg Pred Value         0.9028   0.9449   0.8815   0.8805   0.9730
+## Prevalence             0.2794   0.1521   0.2225   0.2092   0.1368
+## Detection Rate         0.2098   0.1077   0.1246   0.1093   0.1148
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.8238   0.8033   0.7480   0.7267   0.8796
+</code></pre>
+
+<h4>LDA (Linear Discriminant Analysis)</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;lda&quot;,
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1079   59  104  145    8
+##          B  185  570  116   42   36
+##          C  253   88  351  149   14
+##          D  117   65  112  441   69
+##          E  107  181   70  155  388
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.5769          
+##                  95% CI : (0.5629, 0.5908)
+##     No Information Rate : 0.355           
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.4602          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.6198   0.5919  0.46614  0.47318  0.75340
+## Specificity            0.9001   0.9038  0.87858  0.90861  0.88312
+## Pos Pred Value         0.7735   0.6006  0.41053  0.54851  0.43063
+## Neg Pred Value         0.8113   0.9006  0.90072  0.88024  0.96827
+## Prevalence             0.3550   0.1964  0.15355  0.19005  0.10502
+## Detection Rate         0.2200   0.1162  0.07157  0.08993  0.07912
+## Detection Prevalence   0.2845   0.1935  0.17435  0.16395  0.18373
+## Balanced Accuracy      0.7599   0.7479  0.67236  0.69089  0.81826
+</code></pre>
+
+<h4>k-Nearest Neighbors</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;knn&quot;,
+                  trControl = trainControl(
+                    method=&quot;cv&quot;, number = 5
+                  ),
+                  data=training[,colNamesRD])
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1309   22   27   34    3
+##          B   76  773   48   27   25
+##          C   11   27  784   22   11
+##          D   13    8   69  705    9
+##          E   14   36   32   23  796
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.8905          
+##                  95% CI : (0.8814, 0.8991)
+##     No Information Rate : 0.2902          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.8615          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9199   0.8926   0.8167   0.8693   0.9431
+## Specificity            0.9753   0.9564   0.9820   0.9758   0.9741
+## Pos Pred Value         0.9384   0.8145   0.9170   0.8769   0.8835
+## Neg Pred Value         0.9675   0.9765   0.9565   0.9741   0.9880
+## Prevalence             0.2902   0.1766   0.1958   0.1654   0.1721
+## Detection Rate         0.2669   0.1576   0.1599   0.1438   0.1623
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.9476   0.9245   0.8993   0.9226   0.9586
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers4 &lt;- predict(modelFit, ultima)
+# answers produced from K-NN model with sensor-only data
+</code></pre>
+
+<h4>Random Forests</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- randomForest(classe ~ ., data=training[,colNamesRD],
+                         importance = T, nodeSize = 10,
+                         mtry=5)
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1367    8    9   10    1
+##          B   28  893   22    4    2
+##          C    9   16  818   11    1
+##          D    3    7   44  746    4
+##          E    2    6    8   11  874
+## 
+## Overall Statistics
+##                                          
+##                Accuracy : 0.958          
+##                  95% CI : (0.952, 0.9634)
+##     No Information Rate : 0.2873         
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+##                                          
+##                   Kappa : 0.9469         
+##  Mcnemar&#39;s Test P-Value : 7.688e-07      
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9702   0.9602   0.9079   0.9540   0.9909
+## Specificity            0.9920   0.9859   0.9908   0.9859   0.9933
+## Pos Pred Value         0.9799   0.9410   0.9567   0.9279   0.9700
+## Neg Pred Value         0.9880   0.9906   0.9795   0.9912   0.9980
+## Prevalence             0.2873   0.1896   0.1837   0.1595   0.1799
+## Detection Rate         0.2788   0.1821   0.1668   0.1521   0.1782
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.9811   0.9731   0.9493   0.9699   0.9921
+</code></pre>
+
+<pre><code class="r">summary(modelFit$err.rate) # randomForest(...) checks oob by default
+</code></pre>
+
+<pre><code>##       OOB                A                 B                 C          
+##  Min.   :0.03927   Min.   :0.01434   Min.   :0.06390   Min.   :0.03701  
+##  1st Qu.:0.04022   1st Qu.:0.01601   1st Qu.:0.06671   1st Qu.:0.03857  
+##  Median :0.04070   Median :0.01673   Median :0.06742   Median :0.03935  
+##  Mean   :0.04469   Mean   :0.01901   Mean   :0.07233   Mean   :0.04506  
+##  3rd Qu.:0.04303   3rd Qu.:0.01768   3rd Qu.:0.07128   3rd Qu.:0.04207  
+##  Max.   :0.17199   Max.   :0.11466   Max.   :0.20367   Max.   :0.20502  
+##        D                 E          
+##  Min.   :0.06095   Min.   :0.02772  
+##  1st Qu.:0.06260   1st Qu.:0.02919  
+##  Median :0.06468   Median :0.03104  
+##  Mean   :0.06835   Mean   :0.03387  
+##  3rd Qu.:0.06841   3rd Qu.:0.03326  
+##  Max.   :0.21714   Max.   :0.16139
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers5 &lt;- predict(modelFit, ultima)
+# answers produced from Random Forest with sensor-only data
+</code></pre>
+
+<h4>Multinom</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;multinom&quot;, data=training[,colNamesRD])
+</code></pre>
+
+<pre><code>## # weights:  100 (76 variable)
+## initial  value 23687.707195 
+## iter  10 value 21169.976100
+## iter  20 value 19598.127823
+## iter  30 value 18984.995415
+## iter  40 value 18604.394071
+## iter  50 value 18534.842193
+## iter  60 value 18530.201891
+## iter  70 value 18526.124418
+## iter  80 value 15838.425710
+## iter  90 value 15783.696813
+## final  value 15783.572589 
+## converged
+</code></pre>
+
+<pre><code class="r">confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1075   71  113  106   30
+##          B  157  553  126   33   80
+##          C  183   89  436  120   27
+##          D  104   65  135  408   92
+##          E  131  147   62  136  425
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.5907          
+##                  95% CI : (0.5768, 0.6045)
+##     No Information Rate : 0.3365          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.4789          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.6515   0.5978  0.50000   0.5081  0.64985
+## Specificity            0.9017   0.9005  0.89608   0.9034  0.88800
+## Pos Pred Value         0.7706   0.5827  0.50994   0.5075  0.47170
+## Neg Pred Value         0.8361   0.9059  0.89232   0.9037  0.94279
+## Prevalence             0.3365   0.1886  0.17781   0.1637  0.13336
+## Detection Rate         0.2192   0.1128  0.08891   0.0832  0.08666
+## Detection Prevalence   0.2845   0.1935  0.17435   0.1639  0.18373
+## Balanced Accuracy      0.7766   0.7492  0.69804   0.7058  0.76892
+</code></pre>
+
+<h4>GBM</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;gbm&quot;,
+                  trControl = trainControl(
+                    method=&quot;cv&quot;, number = 5
+                  ),
+                  data=training[,colNamesRD])
+</code></pre>
+
+<pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+##      1        1.6094            -nan     0.1000    0.1598
+##      2        1.5075            -nan     0.1000    0.1218
+##      3        1.4322            -nan     0.1000    0.0970
+##      4        1.3724            -nan     0.1000    0.0878
+##      5        1.3178            -nan     0.1000    0.0660
+##      6        1.2760            -nan     0.1000    0.0530
+##      7        1.2421            -nan     0.1000    0.0587
+##      8        1.2060            -nan     0.1000    0.0488
+##      9        1.1754            -nan     0.1000    0.0462
+##     10        1.1471            -nan     0.1000    0.0411
+##     20        0.9426            -nan     0.1000    0.0231
+##     40        0.7429            -nan     0.1000    0.0113
+##     60        0.6333            -nan     0.1000    0.0070
+##     80        0.5513            -nan     0.1000    0.0046
+##    100        0.4961            -nan     0.1000    0.0033
+##    120        0.4481            -nan     0.1000    0.0020
+##    140        0.4051            -nan     0.1000    0.0021
+##    150        0.3883            -nan     0.1000    0.0013
+</code></pre>
+
+<pre><code class="r">confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1323   14   27   25    6
+##          B   76  768   58   27   20
+##          C   32   42  748   26    7
+##          D   24   15   87  659   19
+##          E   18   34   26   42  781
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.8726          
+##                  95% CI : (0.8629, 0.8818)
+##     No Information Rate : 0.3004          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.8385          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.8982   0.8797   0.7907   0.8460   0.9376
+## Specificity            0.9790   0.9551   0.9730   0.9648   0.9705
+## Pos Pred Value         0.9484   0.8093   0.8749   0.8197   0.8668
+## Neg Pred Value         0.9573   0.9735   0.9511   0.9707   0.9870
+## Prevalence             0.3004   0.1780   0.1929   0.1588   0.1699
+## Detection Rate         0.2698   0.1566   0.1525   0.1344   0.1593
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.9386   0.9174   0.8818   0.9054   0.9540
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers6 &lt;- predict(modelFit, ultima)
+# answers produced from Stochastic Gradient Boosting with sensor-only data
+</code></pre>
+
+<h3>Check models on all 55 features</h3>
+
+<h4>Naive Bayes</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;nb&quot;,
+                  trControl = trainControl(
+                    method=&quot;cv&quot;, number = 5
+                  ),
+                  data=training)
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1030   49  142  160   14
+##          B   70  682  137   50   10
+##          C   29   65  715   41    5
+##          D   57    4  150  551   42
+##          E   30   66   48   29  728
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.7557          
+##                  95% CI : (0.7434, 0.7677)
+##     No Information Rate : 0.248           
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.6928          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.8470   0.7875   0.5998   0.6631   0.9111
+## Specificity            0.9010   0.9339   0.9623   0.9379   0.9579
+## Pos Pred Value         0.7384   0.7187   0.8363   0.6853   0.8080
+## Neg Pred Value         0.9470   0.9535   0.8822   0.9317   0.9823
+## Prevalence             0.2480   0.1766   0.2431   0.1695   0.1629
+## Detection Rate         0.2100   0.1391   0.1458   0.1124   0.1485
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      0.8740   0.8607   0.7811   0.8005   0.9345
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers7 &lt;- predict(modelFit, ultima)
+# answers produced from Naive Bayes with all major columns
+</code></pre>
+
+<h4>k-Nearest Neighbors</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;knn&quot;, data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   A   B   C   D   E
+##          A 643 192 258 151 151
+##          B 315 164 155 155 160
+##          C 300  87 214 129 125
+##          D 179 110 173 191 151
+##          E 239 150 144 154 214
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.2908          
+##                  95% CI : (0.2781, 0.3037)
+##     No Information Rate : 0.3418          
+##     P-Value [Acc &gt; NIR] : 1               
+##                                           
+##                   Kappa : 0.097           
+##  Mcnemar&#39;s Test P-Value : 5.147e-15       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.3837  0.23329  0.22669  0.24487  0.26717
+## Specificity            0.7670  0.81314  0.83813  0.85136  0.83256
+## Pos Pred Value         0.4609  0.17281  0.25029  0.23756  0.23751
+## Neg Pred Value         0.7056  0.86372  0.81971  0.85634  0.85336
+## Prevalence             0.3418  0.14335  0.19250  0.15905  0.16334
+## Detection Rate         0.1311  0.03344  0.04364  0.03895  0.04364
+## Detection Prevalence   0.2845  0.19352  0.17435  0.16395  0.18373
+## Balanced Accuracy      0.5753  0.52321  0.53241  0.54811  0.54986
+</code></pre>
+
+<h4>Random Forests</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- randomForest(classe ~ ., data=training,
+                         importance = T, nodeSize = 10,
+                         mtry=5)
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1395    0    0    0    0
+##          B    0  948    1    0    0
+##          C    0    3  851    1    0
+##          D    0    0    9  794    1
+##          E    0    0    0    2  899
+## 
+## Overall Statistics
+##                                          
+##                Accuracy : 0.9965         
+##                  95% CI : (0.9945, 0.998)
+##     No Information Rate : 0.2845         
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+##                                          
+##                   Kappa : 0.9956         
+##  Mcnemar&#39;s Test P-Value : NA             
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            1.0000   0.9968   0.9884   0.9962   0.9989
+## Specificity            1.0000   0.9997   0.9990   0.9976   0.9995
+## Pos Pred Value         1.0000   0.9989   0.9953   0.9876   0.9978
+## Neg Pred Value         1.0000   0.9992   0.9975   0.9993   0.9998
+## Prevalence             0.2845   0.1939   0.1756   0.1625   0.1835
+## Detection Rate         0.2845   0.1933   0.1735   0.1619   0.1833
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      1.0000   0.9983   0.9937   0.9969   0.9992
+</code></pre>
+
+<pre><code class="r">summary(modelFit$err.rate)
+</code></pre>
+
+<pre><code>##       OOB                 A                  B           
+##  Min.   :0.002106   Min.   :0.000239   Min.   :0.001756  
+##  1st Qu.:0.002242   1st Qu.:0.000239   1st Qu.:0.002458  
+##  Median :0.002446   Median :0.000239   Median :0.002809  
+##  Mean   :0.004294   Mean   :0.001079   Mean   :0.005628  
+##  3rd Qu.:0.002650   3rd Qu.:0.000239   3rd Qu.:0.003160  
+##  Max.   :0.097896   Max.   :0.049981   Max.   :0.154262  
+##        C                  D                  E           
+##  Min.   :0.002727   Min.   :0.004146   Min.   :0.001109  
+##  1st Qu.:0.003506   1st Qu.:0.004975   1st Qu.:0.001478  
+##  Median :0.003506   Median :0.005390   Median :0.001848  
+##  Mean   :0.005744   Mean   :0.007775   Mean   :0.003405  
+##  3rd Qu.:0.003896   3rd Qu.:0.006219   3rd Qu.:0.002217  
+##  Max.   :0.111925   Max.   :0.129143   Max.   :0.089109
+</code></pre>
+
+<h5>High accuracy, printing possible solutions</h5>
+
+<pre><code class="r">answers8 &lt;- predict(modelFit, ultima)
+# answers produced from Random Forests with all major columns
+</code></pre>
+
+<h4>Multinomial</h4>
+
+<pre><code class="r">set.seed(31337)
+modelFit &lt;- train(classe ~ ., method=&quot;multinom&quot;, data=training)
+</code></pre>
+
+<pre><code>## # weights:  280 (220 variable)
+## initial  value 23687.707195 
+## iter  10 value 22717.234740
+## iter  20 value 17387.156958
+## iter  30 value 16204.800870
+## iter  40 value 15260.648277
+## iter  50 value 15172.368666
+## iter  60 value 13880.308784
+## iter  70 value 13661.025786
+## iter  80 value 13413.577832
+## iter  90 value 13174.506987
+## iter 100 value 13097.518677
+## final  value 13097.518677 
+## stopped after 100 iterations
+</code></pre>
+
+<pre><code class="r"># and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1107   56   93  121   18
+##          B  155  588   80   40   86
+##          C  153   86  483  104   29
+##          D   64   42   83  576   39
+##          E   81  159   80  128  453
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.654           
+##                  95% CI : (0.6405, 0.6673)
+##     No Information Rate : 0.3181          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.5608          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.7096   0.6316  0.58974   0.5944  0.72480
+## Specificity            0.9139   0.9091  0.90894   0.9421  0.89530
+## Pos Pred Value         0.7935   0.6196  0.56491   0.7164  0.50277
+## Neg Pred Value         0.8709   0.9133  0.91702   0.9041  0.95703
+## Prevalence             0.3181   0.1898  0.16701   0.1976  0.12745
+## Detection Rate         0.2257   0.1199  0.09849   0.1175  0.09237
+## Detection Prevalence   0.2845   0.1935  0.17435   0.1639  0.18373
+## Balanced Accuracy      0.8117   0.7704  0.74934   0.7682  0.81005
+</code></pre>
+
+<h4>Write answers</h4>
+
+<pre><code class="r"># choose most often occurring combination
+a &lt;- table(cbind(id = 1:20, 
+            stack(
+              lapply(mget(ls(pattern = &quot;answers\\d+&quot;)), 
+                     as.character)))[c(&quot;id&quot;, &quot;values&quot;)])
+consensus &lt;- colnames(a)[apply(a,1,which.max)]
+pml_write_files(consensus)
+</code></pre>
+
+<h4>Summary</h4>
+
+<h4>Machine Learnings methods which showed to be most effective where: random forests, knn (k-nearest neighbors), and stochastic gradient boosting. In those all 3 I always used k-cross validation [with k=5] (or analyzing OOB for RandomForests)* to verify if accuracy is legit. Naive Bayes had accuracy of only 0.65-0.7. Finally, I used Majority Voting algorithm to choose candidates for final classification (hence the &#39;consensus&#39; variable).</h4>
+
+<h4>Majority Voting shown to be 100% accurate in this assignment</h4>
+
+<h4>* <a href="https://class.coursera.org/predmachlearn-013/forum/thread?thread_id=91">&ldquo;Project grading/Cross-Validation and Random Forests&rdquo;</a></h4>
+
+<h5>Authored by Oskar Jarczyk, 26th April 2015, with Coursera Honor Code</h5>
+
+</body>
+
+</html>

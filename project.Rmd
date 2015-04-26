@@ -1,0 +1,469 @@
+---
+title: "Practical ML project"
+author: "Oskar Jarczyk"
+date: "Sunday, April 26, 2015"
+output: html_document
+---
+
+### Loading neccesary libraries
+
+```{r load_libraries, warning=FALSE}
+library(doParallel)
+library(knitr)
+library(caret)
+library(randomForest)
+library(ggplot2)
+library(reshape2)
+```
+
+### Setting up working directory and register parallel
+
+```{r setwd, warning=FALSE}
+setwd("/mnt/data1/oskar/pml/")
+registerDoParallel(detectCores())
+# knitr sometimes refuses to co-work with Parallel package
+# but works with instruction knit2html()
+```
+
+```{r, echo=FALSE}
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+pml_write_files = function(x){
+   n = length(x)
+   for(i in 1:n){
+      filename = paste0("problem_id_",i,".txt")
+      write.table(x[i],file=filename,quote=FALSE,
+                  row.names=FALSE,col.names=FALSE)
+   }
+}
+```
+
+### Reading data
+
+```{r read_data, warning=FALSE}
+ultima <- read.csv("/mnt/data1/oskar/pml/pml-testing.csv",
+                   header = T,
+                   na.strings = "NA", row.names = 1)
+dataset <- read.csv("/mnt/data1/oskar/pml/pml-training.csv",
+                   header = T,
+                   na.strings = c("NA","#DIV/0!"),
+                   row.names = 1)
+```
+
+### Cleaning data
+
+```{r clean_data, fig.width=12}
+# data is dirty, cleaning it here and fixing col types
+dataset$kurtosis_roll_belt = as.numeric(dataset$kurtosis_roll_belt)
+dataset$kurtosis_picth_dumbbell = as.numeric(dataset$kurtosis_picth_dumbbell)
+dataset$skewness_roll_dumbbell = as.numeric(dataset$skewness_roll_dumbbell)
+dataset$skewness_pitch_dumbbell = as.numeric(dataset$skewness_pitch_dumbbell)
+dataset$max_yaw_dumbbell = as.numeric(dataset$max_yaw_dumbbell)
+dataset$min_yaw_dumbbell = as.numeric(dataset$min_yaw_dumbbell)
+# remove unwanted columns, too obvious or useless
+p1 <- qplot(dataset$user_name, geom="histogram",
+            fill=I("blue"), col=I("red"))
+p2 <- qplot(dataset$cvtd_timestamp, geom="histogram",
+            fill=I("grey"), col=I("red"))
+p3 <- qplot(dataset$new_window, geom="histogram")
+p4 <- qplot(dataset$total_accel_belt, geom="histogram",
+            fill=I("blue"), col=I("red"))
+multiplot(p1, p2, p3, p4, cols=2)
+```
+
+### Removing unwanted columns, which are too obvious and may cause overfitting
+
+```{r}
+dataset <- dataset[,-which(names(dataset) %in% c(
+   "user_name","cvtd_timestamp", "new_window", "num_window"))]
+```
+
+### Partitioning data for train and test cases, p=0.75 by rule of thumb
+
+```{r partition_data}
+testIndex = createDataPartition(dataset$classe, p = 3/4)[[1]]
+testing = dataset[-testIndex,]
+training = dataset[testIndex,]
+```
+
+### Data cleaning part 2
+
+```{r clean_data2}
+# remove columns which have only NA in all rows
+testing <- testing[,colSums(is.na(testing))<nrow(testing)]
+training <- training[,colSums(is.na(training))<nrow(training)]
+# remove zero variance columns
+zero_v_train <-
+   names(training[, sapply(
+      training, function(v) var(v, na.rm=TRUE)==0)])
+training <- training[,-which(names(training) %in% zero_v_train)]
+testing <- testing[,-which(names(testing) %in% zero_v_train)]
+```
+
+### Principal component analysis
+
+```{r pca, warning=FALSE}
+cls_indx = which(names(training) %in% c("classe"))
+set.seed(31337)
+preProc <- preProcess(training[,-cls_indx], method="pca", thresh=0.85)
+preProc
+# delete columns with at least 1 or more NA value
+training <- training[, colSums(is.na(training)) == 0]
+testing <- testing[, colSums(is.na(testing)) == 0]
+# check again PCA with threshold 0.85
+cls_indx = which(names(training) %in% c("classe"))
+set.seed(31337)
+preProc <- preProcess(training[,-cls_indx], method="pca", thresh=0.85)
+preProc
+```
+
+### Check different models below
+
+```{r rotation_plot}
+variable.group = colnames(training)
+melted <- melt(preProc$rotation[,1:9]) # cbind(variable.group, 
+barplot <- ggplot(data=melted) +
+  geom_bar(aes(x=Var1, y=value, fill=variable.group), stat="identity") +
+  facet_wrap(~Var2)
+barplot
+```
+
+### Check models on PCA-selected features only
+
+#### Naive Bayes
+```{r nb-pca, warning=FALSE}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="nb", data=training,
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess = "pca")
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### Generalized Linear Model
+##### Because 'classe' is a field suggesting a multi-label classification problem, we shouldn't really use glm which works best on binary classes {0,1}
+```{r glm-pca, warning=FALSE}
+# set.seed(31337)
+# modelFit <- train(classe ~ ., method="glm", data=training,
+#                   trControl = trainControl(
+#                      preProcOptions = list(thresh = 0.85)
+#                   ),
+#                   preProcess = "pca")
+# confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### Linear Discriminant Analysis
+```{r lda-pca}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="lda",
+                  preProcess="pca",
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  data=training)
+# took around 2 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### k-Nearest Neighbors
+
+```{r knn-pca}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="knn", 
+                  trControl = trainControl(
+                    method="cv", number = 5,
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess="pca",
+                  data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+##### From now on, all models with high accuracy will get k-fold cross validated
+##### Hence the trainControl with method="cv" instructions in algorithms producing > 0.75 accuracy
+
+##### High accuracy, printing possible solutions
+
+```{r knn-pca-results}
+answers1 <- predict(modelFit, ultima)
+# answers produced from k-nn model with PCA
+```
+
+#### Random Forests
+
+```{r rf-pca}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="rf", 
+                  trControl = trainControl(
+                    method = "oob",
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess="pca",
+                  data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+summary(modelFit$err.rate)
+```
+
+##### Random forest is an exception described in literature, and for validation it uses 'oob' ("out of bounds") method
+
+##### High accuracy, printing possible solutions
+
+```{r rf-pca-results}
+answers2 <- predict(modelFit, ultima)
+# answers produced from Random Forest with PCA
+```
+
+#### Multinomial
+
+```{r multinom-pca}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="multinom",
+                  trControl = trainControl(
+                     preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess="pca", data=training)
+# and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### Stochastic Gradient Boosting
+
+```{r gbm-pca}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="gbm",
+                  trControl = trainControl(
+                    method="cv", number = 5,
+                    preProcOptions = list(thresh = 0.85)
+                  ),
+                  preProcess="pca", data=training)
+# and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+##### High accuracy, printing possible solutions
+
+```{r gbm-pca-results}
+answers3 <- predict(modelFit, ultima)
+# answers produced from Stochastic Gradient Boosting with PCA
+```
+
+#### Check models on sensory-data only
+
+##### I'll take raw sensor data, which are, according to paper
+
+```{r}
+colNamesRD <- c("accel_dumbbell_x", "accel_dumbbell_y", "accel_dumbbell_z",
+                "magnet_dumbbell_x", "magnet_dumbbell_y", "magnet_dumbbell_z",
+                "magnet_arm_x", "magnet_arm_y", "magnet_arm_z",
+                "accel_arm_x", "accel_arm_y", "accel_arm_z",
+                "magnet_belt_x", "magnet_belt_y", "magnet_belt_z",
+                "accel_belt_x", "accel_belt_y", "accel_belt_z",
+                "classe")
+```
+
+#### Naive Bayes
+
+```{r nb-raw_sensors, warning=FALSE}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="nb",
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+#### GLM (Generalized Linear Model)
+
+```{r glm-raw_sensors, warning=FALSE}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="glm",
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+#### LDA (Linear Discriminant Analysis)
+
+```{r lda-raw_sensors}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="lda",
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+#### k-Nearest Neighbors
+
+```{r knn-raw_sensors}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="knn",
+                  trControl = trainControl(
+                    method="cv", number = 5
+                  ),
+                  data=training[,colNamesRD])
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+##### High accuracy, printing possible solutions
+
+```{r knn-raw-results}
+answers4 <- predict(modelFit, ultima)
+# answers produced from K-NN model with sensor-only data
+```
+
+#### Random Forests
+
+```{r rf-raw_sensors}
+set.seed(31337)
+modelFit <- randomForest(classe ~ ., data=training[,colNamesRD],
+                         importance = T, nodeSize = 10,
+                         mtry=5)
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+summary(modelFit$err.rate) # randomForest(...) checks oob by default
+```
+
+##### High accuracy, printing possible solutions
+
+```{r rf-raw-results}
+answers5 <- predict(modelFit, ultima)
+# answers produced from Random Forest with sensor-only data
+```
+
+#### Multinom
+
+```{r multinom-raw_sensors}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="multinom", data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+#### GBM
+
+```{r gbm-raw_sensors}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="gbm",
+                  trControl = trainControl(
+                    method="cv", number = 5
+                  ),
+                  data=training[,colNamesRD])
+confusionMatrix(testing$classe, predict(modelFit,testing[,colNamesRD]))
+```
+
+##### High accuracy, printing possible solutions
+
+```{r gbm-raw_results}
+answers6 <- predict(modelFit, ultima)
+# answers produced from Stochastic Gradient Boosting with sensor-only data
+```
+
+### Check models on all 55 features
+
+#### Naive Bayes
+```{r nb, warning=FALSE}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="nb",
+                  trControl = trainControl(
+                    method="cv", number = 5
+                  ),
+                  data=training)
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+##### High accuracy, printing possible solutions
+
+```{r nb-results, warning=FALSE}
+answers7 <- predict(modelFit, ultima)
+# answers produced from Naive Bayes with all major columns
+```
+
+#### k-Nearest Neighbors
+
+```{r knn}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="knn", data=training)
+# took around 7-8 minutes
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### Random Forests
+
+```{r rf}
+set.seed(31337)
+modelFit <- randomForest(classe ~ ., data=training,
+                         importance = T, nodeSize = 10,
+                         mtry=5)
+confusionMatrix(testing$classe, predict(modelFit,testing))
+summary(modelFit$err.rate)
+```
+
+##### High accuracy, printing possible solutions
+
+```{r rf-results}
+answers8 <- predict(modelFit, ultima)
+# answers produced from Random Forests with all major columns
+```
+
+#### Multinomial
+
+```{r multinom}
+set.seed(31337)
+modelFit <- train(classe ~ ., method="multinom", data=training)
+# and that took around 5-7 minutes..
+confusionMatrix(testing$classe, predict(modelFit,testing))
+```
+
+#### Write answers
+
+```{r}
+# choose most often occuring combination
+a <- table(cbind(id = 1:20, 
+            stack(
+              lapply(mget(ls(pattern = "answers\\d+")), 
+                     as.character)))[c("id", "values")])
+consensus <- colnames(a)[apply(a,1,which.max)]
+pml_write_files(consensus)
+```
+
+#### Summary
+
+#### Machine Learnings methods which showed to be most effective where: random forests, knn, and stochastic gradient boosting. In those all 3 I always used k-cross validation [with k=5] (or analyzing OOB for RandomForests)* to verify if accuracy is legit. Naive Bayes had accuracy of only 0.65-0.7. Finally, I used Majority Voting algorithm to choose candidates for final classification (hence the 'consensus' variable).
+
+#### Majority Voting shown to be 100% accurate in this assignment
+
+#### *["Project grading/Cross-Validation and Random Forests"](https://class.coursera.org/predmachlearn-013/forum/thread?thread_id=91)
+
+##### Authored by Oskar Jarczyk, 26th April 2015, with Coursera Honor Code
